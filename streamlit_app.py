@@ -34,7 +34,12 @@ if uploaded:
 
     if st.button("Predict churn for filtered rows"):
         try:
-            preds = model.predict(filtered_df)
+            # Prepare features by dropping unwanted columns
+            drop_cols = ["customerID", "Churn"]
+            X = filtered_df.drop(columns=[c for c in drop_cols if c in filtered_df.columns], errors='ignore')
+
+            # Predict
+            preds = model.predict(X)(filtered_df)
             st.write("Predictions (0 = retain, 1 = churn):")
             st.dataframe(pd.DataFrame({"Prediction": preds}))
         except Exception as e:
