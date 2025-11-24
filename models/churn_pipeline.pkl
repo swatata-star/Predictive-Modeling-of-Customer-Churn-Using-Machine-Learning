@@ -1,0 +1,16 @@
+import joblib
+import os
+
+MODEL_PATHS = [
+    "churn_pipeline.pkl",
+    "models/churn_pipeline.pkl"
+]
+
+model = None
+for path in MODEL_PATHS:
+    if os.path.exists(path):
+        model = joblib.load(path)
+        break
+
+if model is None:
+    st.error("Model file NOT FOUND. Upload churn_pipeline.pkl to the repository.")
